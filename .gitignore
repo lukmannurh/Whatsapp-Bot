@@ -40,7 +40,7 @@ Thumbs.db
 docker-compose.override.yml
 *.local.yml
 
-# Prisma (no SQLite here, but keep safe)
+# Prisma (safety)
 prisma/*.db
 prisma/*.sqlite
 

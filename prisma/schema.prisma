@@ -21,7 +21,7 @@ model DownloadLog {
   chatId     String
   url        String
   mediaType  String
-  status     String      // success | failed
+  status     String
   reason     String?
   createdAt  DateTime @default(now())
 }

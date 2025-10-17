@@ -57,7 +57,7 @@ function createClient() {
         await message.reply(
           `Perintah tersedia:\n` +
           `- Kirim gambar/video + caption ".s" → bot balas sticker\n` +
-          `- .ig <link_instagram> → unduh media IG\n` +
+          `- .ig <link_instagram> → unduh media IG (via SaveFrom)\n` +
           `- .help → bantuan`
         );
       }

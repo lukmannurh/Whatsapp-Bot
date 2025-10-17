@@ -2,7 +2,7 @@
 
 ## Fitur
 - Sticker dari gambar/video dengan caption `.s`
-- `.ig <url>` untuk unduh media Instagram
+- `.ig <url>` untuk unduh media Instagram (via SaveFrom)
 - Hanya bekerja di grup
 
 ## Menjalankan (Docker)
@@ -19,3 +19,6 @@
 - Pastikan mematuhi ToS & hak cipta saat mengunduh media IG.
 - Session WhatsApp tersimpan di volume `wwebjs_auth`.
 - Log sederhana disimpan di PostgreSQL (tabel `MessageLog`, `DownloadLog`).
+
+### Catatan fitur `.ig` (via SaveFrom)
+Bot menggunakan mekanisme `sfrom.net/<url_instagram>` untuk memperoleh tautan media, kemudian mengunduh dan mengirimkannya ke grup. Jika Instagram atau SaveFrom mengubah mekanisme/anti-bot, fitur ini mungkin perlu pembaruan.
