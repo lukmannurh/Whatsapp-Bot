@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MessageLog {
+  id         BigInt   @id @default(autoincrement())
+  chatId     String
+  fromUser   String
+  isGroup    Boolean
+  command    String?
+  createdAt  DateTime @default(now())
+}
+
+model DownloadLog {
+  id         BigInt   @id @default(autoincrement())
+  chatId     String
+  url        String
+  mediaType  String
+  status     String      // success | failed
+  reason     String?
+  createdAt  DateTime @default(now())
+}

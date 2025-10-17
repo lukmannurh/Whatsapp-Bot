@@ -1,0 +1,49 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.npmrc
+.nvm/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# WhatsApp session (LocalAuth)
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Logs
+logs/
+*.log
+*.pid
+pids/
+*.seed
+*.pid.lock
+
+# Build outputs
+dist/
+build/
+coverage/
+.nyc_output/
+.cache/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Docker
+docker-compose.override.yml
+*.local.yml
+
+# Prisma (no SQLite here, but keep safe)
+prisma/*.db
+prisma/*.sqlite
+
+# Misc
+tmp/
+temp/

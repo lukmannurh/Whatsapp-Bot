@@ -1,0 +1,21 @@
+# WhatsApp Bot (whatsapp-web.js + Express + PostgreSQL)
+
+## Fitur
+- Sticker dari gambar/video dengan caption `.s`
+- `.ig <url>` untuk unduh media Instagram
+- Hanya bekerja di grup
+
+## Menjalankan (Docker)
+1. Salin `.env.example` menjadi `.env` dan sesuaikan.
+2. `docker compose up -d --build`
+3. Cek QR:
+   - Lihat logs: `docker logs -f wwebjs-bot`
+   - atau buka `http://localhost:3000/qr` (akan 204 jika sudah login).
+4. Tambahkan bot ke grup.
+   - Kirim gambar/video dengan caption `.s` → bot balas sticker.
+   - Kirim `.ig <link_instagram>` → bot kirim media IG ke grup.
+
+## Catatan
+- Pastikan mematuhi ToS & hak cipta saat mengunduh media IG.
+- Session WhatsApp tersimpan di volume `wwebjs_auth`.
+- Log sederhana disimpan di PostgreSQL (tabel `MessageLog`, `DownloadLog`).
