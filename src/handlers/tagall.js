@@ -1,4 +1,5 @@
 const log = require('../lib/log');
+const { isOwnerJid, isGroupAdmin } = require('../utils/auth');
 
 function parseTagAll(text) {
   return /^\.(tagall|all|semua)\b/i.test((text || '').trim());
@@ -39,12 +40,14 @@ async function handleTagAll(client, message) {
 
     for (let i = 0; i < batches.length; i++) {
       const batch = batches[i];
-      const names = batch.map(c => `@${(c.number || c.id.user)}`).join(' ');
-      const header = i === 0
-        ? `Menandai ${contacts.length} anggota grup:`
-        : `Lanjutan (${i+1}/${batches.length})`;
-      const body = `${header}\n${names}`;
-      await client.sendMessage(message.from, body, { mentions: batch });
+const batchIds = batch.map(c => c.id?._serialized || c.id || c.number);
+const names = batch.map(c => `@${(c.number || c.id.user)}`).join(' ');
+const header = i === 0
+  ? `Menandai ${contacts.length} anggota grup:`
+  : `Lanjutan (${i+1}/${batches.length})`;
+const body = `${header}
+${names}`;
+await client.sendMessage(message.from, body, { mentions: batchIds });
     }
 
     return true;

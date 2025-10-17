@@ -92,22 +92,45 @@ function toSaveFromUrl(igUrl) {
   const normalized = igUrl.startsWith('http') ? igUrl : `https://${igUrl}`;
   return `https://sfrom.net/${encodeURIComponent(normalized)}`;
 }
+
+function normalizeLink(href) {
+  if (!href) return null;
+  let h = href.trim();
+  if (!h) return null;
+  // Protocol-relative URLs: //cdn.example.com/file.mp4
+  if (h.startsWith('//')) return 'https:' + h;
+  // Relative paths: /dl/file.mp4
+  if (h.startsWith('/')) return new URL(h, 'https://sfrom.net').href;
+  // Data URIs or blobs are invalid for our purpose
+  if (h.startsWith('data:') || h.startsWith('blob:')) return null;
+  // Otherwise, return as-is
+  return h;
+}
+
 function pickMediaLinksFromHtml(html) {
   const $ = load(html);
   const links = new Set();
+
   $('a[href]').each((_, el) => {
-    const href = ($(el).attr('href') || '').trim();
+    const raw = ($(el).attr('href') || '');
+    const href = normalizeLink(raw);
+    if (!href) return;
     if (/\.(mp4|mov|m4v)(\?|$)/i.test(href)) links.add(href);
     if (/\.(jpe?g|png|webp)(\?|$)/i.test(href)) links.add(href);
   });
+
   $('source[src]').each((_, el) => {
-    const src = ($(el).attr('src') || '').trim();
+    const raw = ($(el).attr('src') || '');
+    const src = normalizeLink(raw);
+    if (!src) return;
     if (/\.(mp4|mov|m4v)(\?|$)/i.test(src)) links.add(src);
   });
-  const ogVideo = $('meta[property="og:video"]').attr('content');
-  const ogImage = $('meta[property="og:image"]').attr('content');
+
+  const ogVideo = normalizeLink($('meta[property="og:video"]').attr('content'));
+  const ogImage = normalizeLink($('meta[property="og:image"]').attr('content'));
   if (ogVideo) links.add(ogVideo);
   if (ogImage) links.add(ogImage);
+
   const arr = Array.from(links);
   arr.sort((a,b) => {
     const isVidA = /\.(mp4|mov|m4v)(\?|$)/i.test(a);

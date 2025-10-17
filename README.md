@@ -31,3 +31,12 @@ untuk memperoleh tautan media, lalu mengunduh dan mengirimkannya ke grup.
 
 ### Perintah tambahan
 - `.tagall` — Menyebut semua anggota grup (dikirim bertahap jika anggota banyak).
+
+
+Jika Ryzumi 403/limit, set `RYZUMI_ENABLED=false` di `.env` agar bot langsung pakai fallback SaveFrom.
+
+
+### Admin & Owner
+- `.tagall` hanya untuk **admin grup** atau **owner bot**.
+- `.kick [@user|reply|628xxxx]` hanya untuk **admin grup** atau **owner bot**. Bot harus **admin**.
+- **Owner bot** diatur lewat env `OWNER_NUMBERS` (comma-separated). Default: `082210371333`.

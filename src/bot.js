@@ -5,6 +5,7 @@ const { WAPP_CLIENT_ID } = require('./lib/env');
 const { handleSticker } = require('./handlers/sticker');
 const { handleInstagram } = require('./handlers/instagram');
 const { handleTagAll } = require('./handlers/tagall');
+const { handleKick } = require('./handlers/kick');
 const { logMessage } = require('./lib/db');
 
 let lastQrDataUrl = null;
@@ -52,6 +53,7 @@ function createClient() {
       logMessage({ chatId: message.from, fromUser: sender, isGroup, command });
 
       if (await handleTagAll(client, message)) return;
+      if (await handleKick(client, message)) return;
       if (await handleInstagram(client, message)) return;
       if (await handleSticker(client, message)) return;
 
